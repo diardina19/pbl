@@ -1,77 +1,150 @@
 <?php
-include 'database.php';
+session_start();
+require 'koneksi.php';
 
+// cek login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
-$hariIndo = [
-    "Sunday" => "Minggu",
-    "Monday" => "Senin",
-    "Tuesday" => "Selasa",
-    "Wednesday" => "Rabu",
-    "Thursday" => "Kamis",
-    "Friday" => "Jumat",
-    "Saturday" => "Sabtu"
-];
+$user_id = $_SESSION['user_id'];
 
-$todayName = $hariIndo[date("l")];
+// ambil data user
+$query = mysqli_query($koneksi, "SELECT * FROM users WHERE id = '$user_id'");
+$user = mysqli_fetch_assoc($query);
 
-// Ambil jadwal hari ini dari database
-$stmt = $conn->prepare("SELECT * FROM jadwal WHERE hari = ?");
-$stmt->bind_param("s", $todayName);
-$stmt->execute();
-$result = $stmt->get_result();
-$todaySchedule = $result->fetch_all(MYSQLI_ASSOC);
+// jika user tidak ditemukan
+if (!$user) {
+    header("Location: login.php");
+    exit();
+}
+
+// variabel PHP → Javascript
+$nama = $user['username'];
+$nim  = $user['nim'];
+$contact = $user['contact'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MySchedule - Jadwal Kuliah</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        
+    </style>
 </head>
+<body>
 
-<body class="bg-light">
 
-    <div class="container py-4">
-        <h2 class="fw-bold mb-3">Jadwal Hari Ini: <?= $todayName ?></h2>
-
-        <?php if (count($todaySchedule) == 0): ?>
-            <div class="alert alert-warning text-center">
-                Tidak ada jadwal hari ini 😊
-            </div>
-        <?php else: ?>
-            <?php foreach ($todaySchedule as $j): ?>
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="fw-bold"><?= $j['mataKuliah'] ?></h5>
-                        <p class="mb-1"><i class="bi bi-clock"></i>
-                            <?= $j['jamMulai'] ?> - <?= $j['jamSelesai'] ?>
-                        </p>
-                        <p class="mb-1"><i class="bi bi-door-open"></i> <?= $j['ruangan'] ?></p>
-                        <p class="mb-1"><i class="bi bi-person-badge"></i> <?= $j['dosen'] ?></p>
-
-                        <a href="edit.php?id=<?= $j['id'] ?>" class="btn btn-primary btn-sm">
-                            <i class="bi bi-pencil"></i> Edit
-                        </a>
-
-                        <a href="hapus.php?id=<?= $j['id'] ?>" onclick="return confirm('Hapus jadwal?')"
-                            class="btn btn-danger btn-sm">
-                            <i class="bi bi-trash"></i> Hapus
-                        </a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-
-        <a href="tambah.php" class="btn btn-success mt-3">
-            <i class="bi bi-plus-circle"></i> Tambah Jadwal
-        </a>
+<div class="sidebar d-flex flex-column">
+    <div class="logo">
+        <i class="bi bi-book"></i> MySchedule
     </div>
 
-</body>
+    <div class="user-info">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-person-circle me-2" style="font-size: 24px;"></i>
+            <div>
+                <div class="fw-bold" id="userName"><?= $nama ?></div>
+                <small id="userNim">NIM: <?= $nim ?></small>
+            </div>
+        </div>
+    </div>
 
+    <div class="nav-item active" onclick="showPage('home')">
+        <i class="bi bi-house-door"></i> Home
+    </div>
+    <div class="nav-item" onclick="showPage('jadwal')">
+        <i class="bi bi-journal-text"></i> Jadwal
+    </div>
+    <div class="nav-item" onclick="showPage('kalender')">
+        <i class="bi bi-calendar3"></i> Kalender
+    </div>
+    <div class="nav-item" onclick="showPage('profil')">
+        <i class="bi bi-person"></i> Profil
+    </div>
+    <div class="nav-item" onclick="showPage('about')">
+        <i class="bi bi-info-circle"></i> About
+    </div>
+
+    <form action="logout.php" method="POST">
+        <button class="logout-btn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+    </form>
+</div>
+
+
+<!-- ===================== MAIN CONTENT ===================== -->
+<div class="main-content">
+
+    <!-- ====== HOME ====== -->
+    <div id="homePage" class="page-section active">
+        <div class="text-center mb-4">
+            <h1 class="display-4 fw-bold text-white">
+                Selamat Datang, <span id="welcomeName"><?= explode(" ", $nama)[0] ?></span>! 👋
+            </h1>
+            <p class="lead text-white">Kelola jadwal kuliah Anda dengan mudah</p>
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+            <input type="text" id="searchInput" class="form-control"
+                   placeholder="Cari jadwal..." oninput="handleSearch()">
+            <i class="bi bi-search search-icon"></i>
+        </div>
+
+        <div id="searchResults" style="display:none;"></div>
+
+        <!-- Jadwal hari ini -->
+        <div id="todayScheduleSection">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h2>Jadwal Hari Ini (<span id="todayName"></span>)</h2>
+                    <div id="todaySchedule"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PROFIL ====== -->
+    <div id="profilPage" class="page-section">
+        <div class="card shadow-lg" style="max-width:500px;margin:auto;">
+            <div class="card-body text-center p-5">
+                <div class="rounded-circle bg-success mb-3"
+                    style="width:120px;height:120px;display:flex;align-items:center;justify-content:center;">
+                    <i class="bi bi-person-fill text-white" style="font-size:60px;"></i>
+                </div>
+                <h2><?= $nama ?></h2>
+
+                <div class="text-start mt-4">
+                    <p><strong>NIM:</strong> <?= $nim ?></p>
+                    <p><strong>Kontak:</strong> <?= $contact ?></p>
+                    <p><strong>Status:</strong> <span class="badge bg-success">Aktif</span></p>
+                    <p><strong>Login via PHP Session</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN JADWAL, KALENDER, ABOUT — sama seperti HTML kamu  (tidak perlu diubah) -->
+    <!-- Tinggal copy dari file dashboard.html dan paste di sini -->
+</div>
+
+
+
+<!-- ===================== SCRIPT ===================== -->
+<script>
+    // semua script jadwalList, renderHome(), renderJadwal(), renderCalendar()
+    // tetap sama seperti file HTML asli kamu
+</script>
+
+</body>
 </html>
