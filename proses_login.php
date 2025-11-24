@@ -1,48 +1,46 @@
 <?php
-session_start();
 include 'koneksi.php';
+session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$username = $_POST['username'];
+$password = $_POST['password'];
 
-    $input = mysqli_real_escape_string($koneksi, $_POST['nama']);
-    $password = mysqli_real_escape_string($koneksi, $_POST['password']);
+$stmt = $koneksi->prepare("SELECT username, pw, id, nim, contact, role FROM users WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$stmt->store_result();
 
-    // cek berdasarkan username ATAU nim
-    $query = "SELECT * FROM users WHERE username='$input' OR nim='$input'";
-    $result = mysqli_query($koneksi, $query);
+if ($stmt->num_rows === 1) {
+    $stmt->bind_result($db_username, $db_pw, $db_id, $db_nim, $db_contact, $db_role); 
+    $stmt->fetch();
 
-    if (mysqli_num_rows($result) === 1) {
-        $user = mysqli_fetch_assoc($result);
+    if ($password === $db_pw) {
+        $_SESSION['nama'] = $db_username;
+        $_SESSION['nim'] = $db_nim;
+        $_SESSION['contact'] = $db_contact;
+        $_SESSION['user_id'] = $db_id;
+        $_SESSION['role'] = $db_role;
+        
+        if ($_SESSION['role'] === "admin") {
 
-    // Verifikasi password
-    if ($password === $user['pw']) {
+            $_SESSION['login_success_admin'] = "Selamat Datang " . $_SESSION['nama'] ."!";
 
-        if ($user['status'] === 'inactive') {
-            echo "<script>alert('Akun Anda dinonaktifkan!'); window.location.href='login.php';</script>";
-            exit;
-        }
-
-        // Simpan session user
-        $_SESSION['user'] = [
-            'nama' => $user['username'],
-            'nim'  => $user['nim'],
-            'role' => $user['role']
-        ];
-
-        // Redirect sesuai role
-        if ($user['role'] === 'admin') {
             header("Location: admin.php");
-        } else {
+            exit();
+        } else if ($_SESSION["role"] == "user") {
+            $_SESSION["login_succes_admin"] = "Selamat Datang ". $_SESSION["nama"] . "!";
             header("Location: dashboard.php");
+            exit();
         }
-        exit;
-
     } else {
-        echo "<script>alert('Password salah!'); window.location.href='login.php';</script>";
-        exit;
+        $_SESSION['login_error'] = "NIDN atau Password salah.";
+        header("Location: login.php");
+        exit();
     }
 
-} else {
-    echo "<script>alert('Akun tidak ditemukan!'); window.location.href='login.php';</script>";
-    exit;
-}}
+}
+$stmt -> close();
+$koneksi -> close();
+
+?>
+   
