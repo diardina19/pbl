@@ -6,6 +6,7 @@ $nim = $_POST['nim'];
 $contact = $_POST['contact'];
 $password = $_POST['password'];
 $confirmPassword = $_POST['confirmPassword'];
+$role = $_POST['role'];
 
 if ($password !== $confirmPassword) {
     echo "<script>alert('Konfirmasi password tidak cocok!'); window.location.href='register.php';</script>";
@@ -21,8 +22,8 @@ if (mysqli_num_rows($check) > 0) {
 
 
 
-$query = "INSERT INTO users (username, nim, contact, pw)
-          VALUES ('$username', '$nim', '$contact', '$password')";
+$query = "INSERT INTO users (username, nim, contact, pw, role)
+          VALUES ('$username', '$nim', '$contact', '$password', '$role')";
 
 
 if (mysqli_query($koneksi, $query)) {
