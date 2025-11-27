@@ -97,7 +97,6 @@
       <label class="form-label"for="role">Role</label>
       <select id="role" class="form-select" name="role" required>
         <option value="">Pilih jenis user</option>
-        <option value="admin">Admin</option>
         <option value="user">Mahasiswa</option>
       </select>
     </div>
