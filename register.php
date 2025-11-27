@@ -93,13 +93,7 @@
       <input type="text" class="form-control" name="contact" placeholder="Masukan Contact Anda" required>
     </div>
 
-    <div class="mb-2">
-      <label class="form-label"for="role">Role</label>
-      <select id="role" class="form-select" name="role" required>
-        <option value="">Pilih jenis user</option>
-        <option value="user">Mahasiswa</option>
-      </select>
-    </div>
+    
 
     <div class="mb-2">
       <label class="form-label">Password</label>

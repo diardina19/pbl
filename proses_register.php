@@ -6,7 +6,7 @@ $nim = $_POST['nim'];
 $contact = $_POST['contact'];
 $password = $_POST['password'];
 $confirmPassword = $_POST['confirmPassword'];
-$role = $_POST['role'];
+$role = "user"; // set role default sebagai 'user'
 
 if ($password !== $confirmPassword) {
     echo "<script>alert('Konfirmasi password tidak cocok!'); window.location.href='register.php';</script>";
