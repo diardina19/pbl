@@ -93,8 +93,6 @@
       <input type="text" class="form-control" name="contact" placeholder="Masukan Contact Anda" required>
     </div>
 
-    
-
     <div class="mb-2">
       <label class="form-label">Password</label>
       <input type="password" class="form-control" name="password" placeholder="Masukkan Password Anda" required>
