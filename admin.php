@@ -13,11 +13,7 @@ $nim  = $_SESSION['nim'];
 $contact = $_SESSION['contact'];
 $role = $_SESSION['role'];
 
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="id">
