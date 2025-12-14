@@ -8,6 +8,11 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+$totalsiswa = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM users"))['total'];
+$totalAktif = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS aktif FROM users WHERE status='aktif'"))['aktif'];
+$totalNonAktif = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS nonaktif FROM users WHERE status='nonaktif'"))['nonaktif'];
+$akunterbaru = mysqli_query($koneksi, "SELECT username, nim, status, tanggal_daftar FROM users ORDER BY tanggal_daftar DESC LIMIT 5");
+
 $nama = $_SESSION['nama'];
 $nim  = $_SESSION['nim'];
 $contact = $_SESSION['contact'];
@@ -49,15 +54,16 @@ $role = $_SESSION['role'];
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </div>
-        <div class="nav-item" onclick="showPage('manajemen')">
+        <a href="manajemen.php" class="nav-item">
             <i class="bi bi-people"></i>
             <span>Manajemen Akun</span>
-        </div>
+        </a>
 
-        <button class="logout-btn" onclick="logout()">
-            <i class="bi bi-box-arrow-right"></i>
-            <span>Logout</span>
+        <form action="logout.php" method="POST" class="mt-auto">
+        <button class="logout-btn">
+            <i class="bi bi-box-arrow-right"></i> Logout
         </button>
+    </form>
     </div>
 
     <!-- Main Content -->
@@ -68,7 +74,6 @@ $role = $_SESSION['role'];
                 <h1 class="display-4 fw-bold text-white">Dashboard Admin 👨‍💼</h1>
                 <p class="lead text-white">Kelola akun siswa dengan mudah</p>
             </div>
-
             <div class="row">
                 <div class="col-md-4">
                     <div class="stats-card">
@@ -77,7 +82,7 @@ $role = $_SESSION['role'];
                                 <i class="bi bi-people-fill"></i>
                             </div>
                             <div>
-                                <h3 class="mb-0" id="totalSiswa">0</h3>
+                                <h3 class="mb-0" id="totalSiswa"><?= $totalsiswa ?></h3>
                                 <small class="text-muted">Total Siswa</small>
                             </div>
                         </div>
@@ -90,7 +95,7 @@ $role = $_SESSION['role'];
                                 <i class="bi bi-check-circle-fill"></i>
                             </div>
                             <div>
-                                <h3 class="mb-0" id="siswaAktif">0</h3>
+                                <h3 class="mb-0" id="siswaAktif"><?= $totalAktif ?></h3>
                                 <small class="text-muted">Siswa Aktif</small>
                             </div>
                         </div>
@@ -103,7 +108,7 @@ $role = $_SESSION['role'];
                                 <i class="bi bi-x-circle-fill"></i>
                             </div>
                             <div>
-                                <h3 class="mb-0" id="siswaNonAktif">0</h3>
+                                <h3 class="mb-0" id="siswaNonAktif"><?= $totalNonAktif ?></h3>
                                 <small class="text-muted">Siswa Non-Aktif</small>
                             </div>
                         </div>
@@ -111,88 +116,44 @@ $role = $_SESSION['role'];
                 </div>
             </div>
 
-            <div class="card shadow-lg mt-4">
-                <div class="card-body p-4">
-                    <h4 class="mb-3">Akun Terdaftar Terbaru</h4>
-                    <div id="recentAccounts"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Manajemen Akun Page -->
-        <div id="manajemenPage" class="page-section">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="text-white">Manajemen Akun Siswa</h1>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#akunModal" onclick="openAddForm()">
-                    <i class="bi bi-plus-lg"></i> Tambah Akun Siswa
-                </button>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>No</th>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>No HP</th>
-                            <th>Status</th>
-                            <th>Tanggal Daftar</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="akunTableBody"></tbody>
-                </table>
-            </div>
-        </div>
+          <div class="card shadow-sm mb-4">
+    <div class="card-header header-cream">
+        <h5 class="mb-0">
+            <i class="bi bi-clock-history"></i> Akun Terdaftar Terbaru
+        </h5>
     </div>
 
-    <!-- Modal Form Akun -->
-    <div class="modal fade" id="akunModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Tambah Akun Siswa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="akunForm">
-                        <input type="hidden" id="editId">
-                        
-                        <div class="mb-3">
-                            <label class="form-label">NIM <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nim" placeholder="Contoh: 2023010001" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama" placeholder="Contoh: Ahmad Fauzi" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">No HP <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="noHp" placeholder="Contoh: 081234567890" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Password <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="passwordInput" placeholder="Minimal 6 karakter" required>
-                                <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordModal()">
-                                    <i class="bi bi-eye" id="toggleIconModal"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-success" onclick="saveAkun()">Simpan</button>
-                </div>
-            </div>
-        </div>
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Nama</th>
+                    <th>NIM</th>
+                    <th>Status</th>
+                    <th>Tanggal Daftar</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php while ($row = mysqli_fetch_assoc($akunterbaru)) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['username']) ?></td>
+                    <td><?= htmlspecialchars($row['nim']) ?></td>
+                    <td>
+                        <?php if ($row['status'] == 'aktif') : ?>
+                            <span class="badge bg-success">Aktif</span>
+                        <?php else : ?>
+                            <span class="badge bg-danger">Non-Aktif</span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?= date('d M Y', strtotime($row['tanggal_daftar'])) ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+            </tbody>
+        </table>
     </div>
-
+</div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     

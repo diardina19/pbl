@@ -104,6 +104,16 @@ body {
             color: #991b1b;
         }
 
+        .header-cream {
+                background-color: #845512 !important; 
+                color: #E2C892 !important;
+        }
+
+        .thead-cream {
+                background-color: #E2C892 !important; 
+                color: #845512 !important; 
+        }
+
         @keyframes popIn {
             0% {
                 transform: scale(0.7) translateY(20px);
@@ -166,8 +176,22 @@ body {
                 padding-bottom: 80px;
             }
 
-            .logo, .logout-btn, .admin-info {
-                display: none;
+            .logout-btn { /* tombol logout */
+            margin-top: auto;
+            padding: 12px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            background: #dc3545;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            }
+            .logout-btn:hover {
+            box-shadow: 0 0 20px;
+            transform: scale(1.05);
             }
 
             .nav-item {
@@ -176,4 +200,5 @@ body {
                 margin: 0;
                 font-size: 12px;
             }
+
         }
