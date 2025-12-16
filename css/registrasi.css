@@ -1,0 +1,54 @@
+* { font-family: 'Poppins', sans-serif; }
+      body {
+        min-height: 100vh;
+        background: url('https://www.polibatam.ac.id/wp-content/uploads/2022/07/MG_8893-scaled.jpg') center/cover no-repeat;
+        display: flex; justify-content: center; align-items: center;
+      }
+      .form-container {
+        width: 40%; background: rgba(255, 255, 255, 0.43);
+        border-radius: 40px; 
+        padding: 30px 40px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      .form-container img {
+        display: block; 
+        margin: 0 auto 15px; 
+        width: 20%;
+      }
+      .form-container h2 { 
+        text-align: center; 
+        font-weight: 600; 
+        margin-bottom: 15px; 
+        color: #333; }
+      .form-label { 
+        font-weight: 600; 
+        color: #0e0e0e; }
+      .form-control {
+        border-radius: 30px; 
+        border: 1px solid #E2C892; 
+        transition: all 0.3s ease;
+      }
+      .form-control:focus {
+        transform: scale(1.05); 
+        box-shadow: 0 0 10px #845512; 
+        border-color: #E2C892;
+      }
+      .btn-register {
+        background-color: #E2C892; 
+        border: none; color: white; 
+        font-weight: 600;
+        border-radius: 30px; 
+        padding: 10px; 
+        transition: all 0.3s;
+      }
+      .btn-register:hover {
+        box-shadow: 0 0 10px #845512, 0 0 20px #845512, 0 0 60px #845512 !important;
+        transform: scale(0.95);
+      }
+      .registrasi-a {
+        display: block; text-align: center; margin-top: 10px;
+        color: #845512; font-weight: 600; text-decoration: none;
+      }
+      .registrasi-a:hover { color: #E2C892; text-decoration: underline; }
+      @media (max-width: 768px) { .form-container { width: 90%; padding: 25px; } }
