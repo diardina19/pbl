@@ -15,6 +15,46 @@
         let draggedJadwalId = null;
         let draggedOldDate = null;
 
+        // ========== LOGOUT CONFIRMATION dengan ANIMASI ==========
+        function confirmLogout() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Yakin ingin keluar?',
+                text: 'Anda akan diarahkan ke halaman login',
+                showCancelButton: true,
+                confirmButtonText: '<i class="bi bi-box-arrow-right"></i> Ya, Keluar',
+                cancelButtonText: '<i class="bi bi-x-circle"></i> Batal',
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                reverseButtons: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp animate__faster'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Tampilkan loading dengan animasi
+                    Swal.fire({
+                        title: 'Logging out...',
+                        html: '<div class="spinner-border text-danger" role="status"></div><br><br>Sampai jumpa lagi! 👋',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        showClass: {
+                            popup: 'animate__animated animate__zoomIn'
+                        }
+                    }).then(() => {
+                        // Redirect ke logout.php
+                        window.location.href = 'logout.php';
+                    });
+                }
+            });
+        }
+
         // ========== SEARCH FUNCTION ==========
         function handleSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -38,7 +78,9 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Ya, Selesai',
-                cancelButtonText: 'Batal'
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#6c757d'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = 'process/mark_done.php?id=' + id;
@@ -81,7 +123,9 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Ya, Pindahkan',
-                cancelButtonText: 'Batal'
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#0d6efd',
+                cancelButtonColor: '#6c757d'
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Submit form
@@ -188,9 +232,10 @@
                 text: 'Apakah Anda yakin ingin menghapus jadwal ' + mataKuliah + '?',
                 showConfirmButton: true,
                 confirmButtonText: 'Ya, Hapus',
-                confirmButtonColor: '#d33',
+                confirmButtonColor: '#dc3545',
                 showCancelButton: true,
                 cancelButtonText: 'Batal',
+                cancelButtonColor: '#6c757d'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = 'process/delete_jadwal.php?id=' + id + '&redirect=' + redirect;
