@@ -129,7 +129,7 @@
     sessionStorage.setItem('resetData', JSON.stringify(resetData));
 
     // Lanjut ke halaman berikut
-    window.location.href = 'regis2.html';
+    window.location.href = 'lupa2.php';
   });
 </script>
 

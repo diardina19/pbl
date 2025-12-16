@@ -126,6 +126,13 @@
             border: 1px solid #dee2e6;
             border-radius: 8px;
             background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
         }
 
         .calendar-day.has-schedule {
@@ -142,6 +149,39 @@
         .day-number {
             font-weight: bold;
             font-size: 14px;
+        }
+
+        .calendar-event {
+            background: #845512;
+            color: white;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-event:hover {
+            background: #a97124;
+            transform: scale(1.05);
+        }
+
+        .more-events {
+            background: #ffbe5c;
+            color: #333;
+            padding: 3px;
+            border-radius: 4px;
+            font-size: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .more-events:hover {
+            background: #ffa500;
+            transform: scale(1.05);
         }
 
         .logout-btn {
@@ -179,44 +219,6 @@
             font-weight: 600;
         }
 
-        .calendar-event {
-            background: #845512;
-            color: white;
-            padding: 4px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            margin-bottom: 2px;
-            cursor: move;
-            transition: all 0.2s;
-        }
-
-        .calendar-event:hover {
-            background: #a97124;
-            transform: scale(1.05);
-        }
-
-        .more-events {
-            background: #ffbe5c;
-            color: #333;
-            padding: 3px;
-            border-radius: 4px;
-            font-size: 10px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .more-events:hover {
-            background: #ffa500;
-            transform: scale(1.05);
-        }
-
-        .calendar-day.drag-over {
-            background: #d4edda !important;
-            border: 2px dashed #28a745 !important;
-        }
-
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
@@ -224,16 +226,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-out-done {
-            animation: fadeOutDone 0.8s ease forwards;
-        }
-
-        @keyframes fadeOutDone {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.95) translateX(20px); }
-            100% { opacity: 0; transform: scale(0.8) translateX(50px); height: 0; padding: 0; margin: 0; }
         }
 
         @media (max-width: 768px) {

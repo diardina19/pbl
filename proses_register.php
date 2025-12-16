@@ -1,5 +1,5 @@
 <?php
-include 'koneksi.php'; // file koneksi ke database
+include 'config/koneksi.php'; // file koneksi ke database
 
 $username = $_POST['username'];
 $nim = $_POST['nim'];
@@ -17,7 +17,7 @@ if ($password !== $confirmPassword) {
 $check = mysqli_query($koneksi, "SELECT * FROM users WHERE username='$username'");
 if (mysqli_num_rows($check) > 0) {
     echo "<script>alert('Username sudah terdaftar!'); window.location.href='register.php';</script>";
-    exit;
+    exit;   
 }
 
 

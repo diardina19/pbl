@@ -13,7 +13,7 @@
         </div>
     <?php else: ?>
         <?php foreach ($jadwal_list as $jadwal): ?>
-        <div class="card mb-3 shadow-sm">
+        <div class="card mb-3 shadow-sm jadwal-item">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
                     <h5 class="card-title mb-1"><?php echo htmlspecialchars($jadwal['mata_kuliah']); ?></h5>
@@ -25,9 +25,9 @@
                     <small class="text-muted">Dosen: <?php echo htmlspecialchars($jadwal['dosen']); ?></small>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-primary btn-sm" onclick='editJadwalModal(<?php echo json_encode($jadwal); ?>)'>
+                    <a href="dashboard.php?page=jadwal&edit=<?php echo $jadwal['id']; ?>" class="btn btn-primary btn-sm">
                         <i class="bi bi-pencil"></i>
-                    </button>
+                    </a>
                     <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo htmlspecialchars($jadwal['mata_kuliah']); ?>', <?php echo $jadwal['id']; ?>, 'jadwal')">
                         <i class="bi bi-trash"></i>
                     </button>

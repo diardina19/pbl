@@ -13,23 +13,26 @@
         </div>
     </div>
     
-    <a href="dashboard.php?page=home" class="nav-item <?php echo ($active_page == 'home') ? 'active' : ''; ?>">
-        <i class="bi bi-house-door"></i> <span>Home</span>
-    </a>
-    <a href="dashboard.php?page=jadwal" class="nav-item <?php echo ($active_page == 'jadwal') ? 'active' : ''; ?>">
-        <i class="bi bi-journal-text"></i> <span>Jadwal</span>
-    </a>
-    <a href="dashboard.php?page=kalender" class="nav-item <?php echo ($active_page == 'kalender') ? 'active' : ''; ?>">
-        <i class="bi bi-calendar3"></i> <span>Kalender</span>
-    </a>
-    <a href="dashboard.php?page=profil" class="nav-item <?php echo ($active_page == 'profil') ? 'active' : ''; ?>">
-        <i class="bi bi-person"></i> <span>Profil</span>
-    </a>
-    <a href="dashboard.php?page=about" class="nav-item <?php echo ($active_page == 'about') ? 'active' : ''; ?>">
-        <i class="bi bi-info-circle"></i> <span>About</span>
-    </a>
+    <div class="flex-grow-1">
+        <a href="dashboard.php?page=home" class="nav-item <?php echo ($active_page == 'home') ? 'active' : ''; ?>">
+            <i class="bi bi-house-door"></i> <span>Home</span>
+        </a>
+        <a href="dashboard.php?page=jadwal" class="nav-item <?php echo ($active_page == 'jadwal') ? 'active' : ''; ?>">
+            <i class="bi bi-journal-text"></i> <span>Jadwal</span>
+        </a>
+        <a href="dashboard.php?page=kalender" class="nav-item <?php echo ($active_page == 'kalender') ? 'active' : ''; ?>">
+            <i class="bi bi-calendar3"></i> <span>Kalender</span>
+        </a>
+        <a href="dashboard.php?page=profil" class="nav-item <?php echo ($active_page == 'profil') ? 'active' : ''; ?>">
+            <i class="bi bi-person"></i> <span>Profil</span>
+        </a>
+        <a href="dashboard.php?page=about" class="nav-item <?php echo ($active_page == 'about') ? 'active' : ''; ?>">
+            <i class="bi bi-info-circle"></i> <span>About</span>
+        </a>
+    </div>
     
-    <button class="logout-btn" type="button" onclick="logoutConfirm()">
+    <!-- Logout Button di Pojok Bawah -->
+    <button class="logout-btn" type="button" onclick="confirmLogout()">
         <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
     </button>
 </div>
