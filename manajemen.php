@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config/koneksi.php';
+include 'config/koneksi.php';
 
 // =====================
 // CEK LOGIN & ROLE ADMIN
@@ -10,9 +10,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// =====================
 // PROSES TAMBAH AKUN
-// =====================
 if (isset($_POST['tambahAkun'])) {
     $nim      = mysqli_real_escape_string($koneksi, $_POST['nim']);
     $username = mysqli_real_escape_string($koneksi, $_POST['username']);
@@ -30,9 +28,8 @@ if (isset($_POST['tambahAkun'])) {
     exit();
 }
 
-// =====================
-// PROSES AKTIF / NONAKTIF
-// =====================
+
+// PROSES AKTIF / NONAKTIF AKUN
 if (isset($_GET['aksi']) && isset($_GET['id'])) {
     $id = intval($_GET['id']);
 
@@ -46,9 +43,8 @@ if (isset($_GET['aksi']) && isset($_GET['id'])) {
     exit();
 }
 
-// =====================
+
 // AMBIL DATA USERS
-// =====================
 $users = mysqli_query($koneksi, "SELECT * FROM users ORDER BY id DESC");
 
 $namaAdmin = $_SESSION['username'] ?? 'Admin';
@@ -62,9 +58,7 @@ $roleAdmin = $_SESSION['role'];
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- CSS Admin -->
     <link rel="stylesheet" href="css/admin.css">
 </head>
 
