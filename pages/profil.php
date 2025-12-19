@@ -10,7 +10,6 @@
             <div class="text-start mt-4">
                 <p><strong>NIM:</strong> <?php echo htmlspecialchars($user['nim']); ?></p>
                 <p><strong>Kontak:</strong> <?php echo htmlspecialchars($user['contact']); ?></p>
-                <p><strong>Status:</strong> <span class="badge bg-success">Aktif</span></p>
             </div>
         </div>
     </div>

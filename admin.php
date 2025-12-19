@@ -9,9 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $totalsiswa = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM users"))['total'];
-$totalAktif = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS aktif FROM users WHERE status='aktif'"))['aktif'];
-$totalNonAktif = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS nonaktif FROM users WHERE status='nonaktif'"))['nonaktif'];
-$akunterbaru = mysqli_query($koneksi, "SELECT username, nim, status, tanggal_daftar FROM users ORDER BY tanggal_daftar DESC LIMIT 5");
+$akunterbaru = mysqli_query($koneksi, "SELECT username, nim, tanggal_daftar FROM users ORDER BY tanggal_daftar DESC LIMIT 5");
 
 $nama = $_SESSION['nama'];
 $nim  = $_SESSION['nim'];
@@ -88,33 +86,6 @@ $role = $_SESSION['role'];
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="stats-card">
-                        <div class="d-flex align-items-center">
-                            <div class="icon bg-primary text-white me-3">
-                                <i class="bi bi-check-circle-fill"></i>
-                            </div>
-                            <div>
-                                <h3 class="mb-0" id="siswaAktif"><?= $totalAktif ?></h3>
-                                <small class="text-muted">Siswa Aktif</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="stats-card">
-                        <div class="d-flex align-items-center">
-                            <div class="icon bg-danger text-white me-3">
-                                <i class="bi bi-x-circle-fill"></i>
-                            </div>
-                            <div>
-                                <h3 class="mb-0" id="siswaNonAktif"><?= $totalNonAktif ?></h3>
-                                <small class="text-muted">Siswa Non-Aktif</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
           <div class="card shadow-sm mb-4">
     <div class="card-header header-cream">
@@ -129,7 +100,6 @@ $role = $_SESSION['role'];
                 <tr>
                     <th>Nama</th>
                     <th>NIM</th>
-                    <th>Status</th>
                     <th>Tanggal Daftar</th>
                 </tr>
             </thead>
@@ -138,13 +108,6 @@ $role = $_SESSION['role'];
                 <tr>
                     <td><?= htmlspecialchars($row['username']) ?></td>
                     <td><?= htmlspecialchars($row['nim']) ?></td>
-                    <td>
-                        <?php if ($row['status'] == 'aktif') : ?>
-                            <span class="badge bg-success">Aktif</span>
-                        <?php else : ?>
-                            <span class="badge bg-danger">Non-Aktif</span>
-                        <?php endif; ?>
-                    </td>
                     <td>
                         <?= date('d M Y', strtotime($row['tanggal_daftar'])) ?>
                     </td>
