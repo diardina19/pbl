@@ -12,7 +12,7 @@ $totalsiswa = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS tota
 $akunterbaru = mysqli_query($koneksi, "SELECT username, nim, tanggal_daftar FROM users ORDER BY tanggal_daftar DESC LIMIT 5");
 
 $nama = $_SESSION['nama'];
-$nim  = $_SESSION['nim'];
+$nim = $_SESSION['nim'];
 $contact = $_SESSION['contact'];
 $role = $_SESSION['role'];
 
@@ -20,24 +20,26 @@ $role = $_SESSION['role'];
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MySchedule - Admin Panel</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/admin.css">
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar d-flex flex-column">
         <div class="logo">
             <i class="bi bi-shield-lock"></i> Admin Panel
         </div>
-        
+
         <div class="admin-info">
             <div class="d-flex align-items-center">
                 <i class="bi bi-person-circle me-2" style="font-size: 24px;"></i>
@@ -47,7 +49,7 @@ $role = $_SESSION['role'];
                 </div>
             </div>
         </div>
-        
+
         <div class="nav-item active" onclick="showPage('dashboard')">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
@@ -57,11 +59,11 @@ $role = $_SESSION['role'];
             <span>Manajemen Akun</span>
         </a>
 
-        <form action="logout.php" method="POST" class="mt-auto">
-        <button class="logout-btn">
-            <i class="bi bi-box-arrow-right"></i> Logout
-        </button>
-    </form>
+        <form action="logout.php" method="POST" class="mt-auto w-100">
+            <button type="submit" class="logout-btn w-100">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </form>
     </div>
 
     <!-- Main Content -->
@@ -73,10 +75,10 @@ $role = $_SESSION['role'];
                 <p class="lead text-white">Kelola akun siswa dengan mudah</p>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-10 align-items-center mx-auto mb-4">
                     <div class="stats-card">
-                        <div class="d-flex align-items-center">
-                            <div class="icon bg-success text-white me-3">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <div class="icon bg-success text-white mb-2 mx-auto">
                                 <i class="bi bi-people-fill"></i>
                             </div>
                             <div>
@@ -85,40 +87,46 @@ $role = $_SESSION['role'];
                             </div>
                         </div>
                     </div>
+
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header header-cream text-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history"></i> Akun Terdaftar Terbaru
+                    </h5>
                 </div>
 
-          <div class="card shadow-sm mb-4">
-    <div class="card-header header-cream">
-        <h5 class="mb-0">
-            <i class="bi bi-clock-history"></i> Akun Terdaftar Terbaru
-        </h5>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-light text-center">
+                            <tr>
+                                <th>Nama</th>
+                                <th>NIM</th>
+                                <th>Tanggal Daftar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($akunterbaru)): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($row['username']) ?></td>
+                                    <td><?= htmlspecialchars($row['nim']) ?></td>
+                                    <td>
+                                        <?= date('d M Y', strtotime($row['tanggal_daftar'])) ?>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card-body">
-        <table class="table table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>Nama</th>
-                    <th>NIM</th>
-                    <th>Tanggal Daftar</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php while ($row = mysqli_fetch_assoc($akunterbaru)) : ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['username']) ?></td>
-                    <td><?= htmlspecialchars($row['nim']) ?></td>
-                    <td>
-                        <?= date('d M Y', strtotime($row['tanggal_daftar'])) ?>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 </body>
+
 </html>
