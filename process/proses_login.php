@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config/koneksi.php';
+include '../config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -25,16 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Redirect sesuai role
         if ($row['role'] === 'admin') {
             $_SESSION['login_success_admin'] = "Selamat Datang " . $row['username'] . "!";
-            header("Location: admin.php");
+            header("Location: ../admin.php");
         } else {
             $_SESSION['login_success_user'] = "Selamat Datang " . $row['username'] . "!";
-            header("Location: dashboard.php");
+            header("Location: ../dashboard.php");
         }
         exit();
 
     } else {
         $_SESSION['login_error'] = "Username atau Password salah.";
-        header("Location: login.php");
+        header("Location: ../login.php");
         exit();
     }
 }

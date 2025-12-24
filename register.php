@@ -74,7 +74,7 @@
 <body>
 
 <div class="form-container"> <!-- kontainer formulir registrasi --->
-  <form action="proses_register.php" method="POST"> 
+  <form action="process/proses_register.php" method="POST"> 
     <img src="https://upload.wikimedia.org/wikipedia/id/2/2c/Politeknik_Negeri_Batam.png" alt="logo"> 
     <h2>Form Registrasi</h2>
 

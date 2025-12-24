@@ -50,7 +50,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm">
                         <div class="card-body">
-                            <img src="ketua.jpg" alt="Andi Facha H.A" 
+                            <img src="foto/ketua.jpg" alt="Andi Facha H.A" 
                                  class="rounded-circle mb-3" 
                                  style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #198754;">
                             <h5 class="fw-bold mb-2">Andi Facha H.A</h5>
@@ -62,7 +62,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm">
                         <div class="card-body">
-                            <img src="anggota.jpg" alt="Diar Dina" 
+                            <img src="foto/anggota.jpg" alt="Diar Dina" 
                                  class="rounded-circle mb-3" 
                                  style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #198754;">
                             <h5 class="fw-bold mb-2">Diar Dina</h5>
@@ -74,7 +74,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm">
                         <div class="card-body">
-                            <img src="anggota1.jpg" alt="Ita Lasari Purba" 
+                            <img src="foto/anggota1.jpg" alt="Ita Lasari Purba" 
                                  class="rounded-circle mb-3" 
                                  style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #ffc107;">
                             <h5 class="fw-bold mb-2">Ita Lasari Purba</h5>

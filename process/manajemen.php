@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'config/koneksi.php';
+include '../config/koneksi.php';
 
 // CEK LOGIN & ROLE ADMIN
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -26,7 +26,7 @@ if (isset($_POST['tambahAkun'])) {
         $_SESSION['error'] = "Gagal menambahkan akun: " . mysqli_error($koneksi);
     }
 
-    header("Location: manajemen.php");
+    header("Location: process/manajemen.php");
     exit();
 }
 
@@ -53,7 +53,7 @@ if (isset($_POST['editAkun'])) {
         $_SESSION['error'] = "Gagal memperbarui akun: " . mysqli_error($koneksi);
     }
 
-    header("Location: manajemen.php");
+    header("Location: process/manajemen.php");
     exit();
 }
 
@@ -69,7 +69,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] === 'hapus' && isset($_GET['id'])) {
         $_SESSION['error'] = "Gagal menghapus akun: " . mysqli_error($koneksi);
     }
 
-    header("Location: manajemen.php");
+    header("Location: process/manajemen.php");
     exit();
 }
 
@@ -110,17 +110,17 @@ $roleAdmin = $_SESSION['role'];
         </div>
     </div>
 
-    <a href="admin.php" class="nav-item">
+    <a href="../admin.php" class="nav-item">
         <i class="bi bi-speedometer2"></i>
         <span>Dashboard</span>
     </a>
 
-    <a href="manajemen.php" class="nav-item active">
+    <a href="process/manajemen.php" class="nav-item active">
         <i class="bi bi-people"></i>
         <span>Manajemen Akun</span>
     </a>
 
-    <form action="logout.php" method="POST" class="mt-auto w-100">
+    <form action="../logout.php" method="POST" class="mt-auto w-100">
         <button type="submit" class="logout-btn w-100">
             <i class="bi bi-box-arrow-right"></i> Logout
         </button>

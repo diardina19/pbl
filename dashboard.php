@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config/koneksi.php';
+include 'config/koneksi.php';
 
 // Cek login
 if (!isset($_SESSION['user_id'])) {

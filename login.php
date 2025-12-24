@@ -18,7 +18,7 @@ session_start();
 <body>
 
   <div class="login-container">
-    <form action="proses_login.php" method="POST">
+    <form action="process/proses_login.php" method="POST">
       <img src="https://upload.wikimedia.org/wikipedia/id/2/2c/Politeknik_Negeri_Batam.png" class="logo">
 
       <div class="mb-2">

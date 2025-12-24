@@ -54,7 +54,7 @@ $role = $_SESSION['role'];
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </div>
-        <a href="manajemen.php" class="nav-item">
+        <a href="process/manajemen.php" class="nav-item">
             <i class="bi bi-people"></i>
             <span>Manajemen Akun</span>
         </a>
